@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>غزل‌چین - بازی فکری ابیات حافظ</title>
+    <title>غزل‌چین - پازل ابیات و اشعار حافظ</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -35,11 +35,11 @@
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #EFEBE9;
+            background-color: #FAF6F0;
             color: #2C1810;
         }
         .dark body {
-            background-color: #020617;
+            background-color: #0F172A;
             color: #F8FAFC;
         }
         @keyframes shake {
@@ -58,20 +58,27 @@
             transform: translateY(4px);
             box-shadow: 0 0 0 #9E422B;
         }
-        /* Hide scrollbar for chrome, safari and opera */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        .draggable-chip {
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
         }
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+        .draggable-chip:active {
+            cursor: grabbing;
+        }
+        .drop-target {
+            transition: all 0.2s ease;
+        }
+        .drop-target.drag-over {
+            background-color: rgba(194, 89, 63, 0.15);
+            border-color: #C2593F;
+            transform: scale(1.03);
         }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-0 sm:p-4 transition-colors duration-300">
 
-    <!-- Outer Viewport Switcher Banner (Desktop helper) -->
+    <!-- Desktop Viewport Switcher Banner -->
     <div class="fixed top-3 left-3 z-50 hidden sm:flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg border border-amber-200 dark:border-slate-700 text-xs">
         <span class="text-gray-500">قاب موبایل:</span>
         <button onclick="togglePhoneFrame()" id="frameToggleBtn" class="font-bold text-persian-primary dark:text-amber-400 hover:underline">تمام‌صفحه</button>
@@ -80,7 +87,7 @@
     <!-- Mobile App Container Frame -->
     <div id="appContainer" class="w-full sm:max-w-[420px] h-screen sm:h-[880px] sm:rounded-[48px] sm:border-[10px] sm:border-slate-800 bg-[#FAF6F0] dark:bg-slate-900 shadow-2xl flex flex-col justify-between overflow-hidden relative transition-all duration-300">
         
-        <!-- Mobile Status Bar (Fake) -->
+        <!-- Mobile Status Bar -->
         <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-2.5 flex items-center justify-between border-b border-amber-100/60 dark:border-slate-800 select-none shrink-0">
             <span class="text-xs font-bold text-gray-700 dark:text-gray-200" id="statusBarTime">۰۲:۰۰</span>
             <div class="w-24 h-4 bg-slate-800 rounded-full mx-auto absolute left-1/2 transform -translate-x-1/2 top-1.5 hidden sm:block"></div>
@@ -117,8 +124,8 @@
             </div>
         </header>
 
-        <!-- Dynamic Content Area (Scrollable) -->
-        <main class="flex-1 overflow-y-auto no-scrollbar p-4 flex flex-col justify-between">
+        <!-- Dynamic Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 flex flex-col justify-between">
             
             <!-- 1. MAIN MENU SCREEN -->
             <div id="screenMenu" class="space-y-4 my-auto">
@@ -126,7 +133,7 @@
                     <span class="text-4xl mb-2 inline-block">🖋️</span>
                     <h2 class="text-xl font-bold text-persian-primary dark:text-amber-400 mb-1">غزل‌چین حافظ</h2>
                     <p class="text-[11px] text-gray-600 dark:text-gray-300 max-w-xs mx-auto leading-relaxed">
-                        چیدن کلمات ابیات ملکوتی لسان‌الغیب و سفر در بوستان شعر و ادب پارسی.
+                        کلمات را با **کشیدن و رها کردن (Drag & Drop)** یا ضربه زدن در جای درست خود قرار دهید.
                     </p>
                 </div>
 
@@ -178,24 +185,24 @@
 
                 <!-- Answer Slots Area -->
                 <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-amber-100 dark:border-slate-700">
-                    <p class="text-[11px] text-gray-400 mb-2 text-center">کلمات را به ترتیب صحیح بچینید:</p>
+                    <p class="text-[11px] text-gray-400 mb-2 text-center">کلمات را بکشید یا کلیک کنید تا در خانه‌ها قرار گیرند:</p>
                     
                     <!-- First Hemistich Slots -->
                     <div class="mb-3">
                         <p class="text-[11px] font-bold text-persian-primary dark:text-amber-400 mb-1.5">مصرع اول:</p>
-                        <div id="firstHemistichSlots" class="flex flex-wrap gap-1.5 min-h-[44px] p-2 bg-gray-50 dark:bg-slate-900 rounded-xl border border-dashed border-gray-300 dark:border-slate-700 items-center justify-center">
+                        <div id="firstHemistichSlots" class="flex flex-wrap gap-1.5 min-h-[46px] p-2 bg-gray-50 dark:bg-slate-900 rounded-xl border border-dashed border-gray-300 dark:border-slate-700 items-center justify-center">
                         </div>
                     </div>
 
                     <!-- Second Hemistich Slots -->
                     <div>
                         <p class="text-[11px] font-bold text-persian-primary dark:text-amber-400 mb-1.5">مصرع دوم:</p>
-                        <div id="secondHemistichSlots" class="flex flex-wrap gap-1.5 min-h-[44px] p-2 bg-gray-50 dark:bg-slate-900 rounded-xl border border-dashed border-gray-300 dark:border-slate-700 items-center justify-center">
+                        <div id="secondHemistichSlots" class="flex flex-wrap gap-1.5 min-h-[46px] p-2 bg-gray-50 dark:bg-slate-900 rounded-xl border border-dashed border-gray-300 dark:border-slate-700 items-center justify-center">
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Toolbar (Hint, Undo, Clear, Shuffle) -->
+                <!-- Action Toolbar -->
                 <div class="flex items-center justify-center gap-1.5">
                     <button onclick="useHint()" class="flex items-center gap-1 px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 dark:bg-slate-800 dark:text-amber-300 rounded-xl text-[11px] font-bold transition shadow-sm">
                         💡 راهنما (-۲۰)
@@ -213,8 +220,8 @@
 
                 <!-- Word Pool (Chips) -->
                 <div class="bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-sm border border-amber-100 dark:border-slate-700">
-                    <p class="text-[10px] text-gray-400 mb-2 text-center">کلمات موجود:</p>
-                    <div id="wordPool" class="flex flex-wrap gap-2 justify-center min-h-[64px] items-center">
+                    <p class="text-[10px] text-gray-400 mb-2 text-center">کلمات موجود (قابل درگ کردن یا کلیک):</p>
+                    <div id="wordPool" class="flex flex-wrap gap-2 justify-center min-h-[70px] items-center">
                     </div>
                 </div>
 
@@ -226,7 +233,7 @@
 
         </main>
 
-        <!-- Bottom Navigation Bar (Mobile App Style) -->
+        <!-- Bottom Navigation Bar -->
         <nav class="bg-white dark:bg-slate-900 border-t border-amber-100 dark:border-slate-800 px-6 py-2.5 flex items-center justify-around shrink-0 select-none">
             <button onclick="showScreen('menu')" class="flex flex-col items-center text-persian-primary dark:text-amber-400 text-[10px] font-bold gap-0.5">
                 <span class="text-lg">🏠</span> خانه
@@ -242,14 +249,13 @@
             </button>
         </nav>
 
-        <!-- Mobile Home Indicator Bar (Fake) -->
-        <div class="bg-white dark:bg-slate-955 py-1.5 flex justify-center shrink-0">
+        <div class="bg-white dark:bg-slate-950 py-1.5 flex justify-center shrink-0">
             <div class="w-32 h-1 bg-gray-300 dark:bg-slate-700 rounded-full"></div>
         </div>
 
     </div>
 
-    <!-- Settings & Profile Modal -->
+    <!-- Settings Modal -->
     <div id="settingsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-amber-100 dark:border-slate-800 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-4">
@@ -409,17 +415,13 @@
 
     <!-- JavaScript Game Engine -->
     <script>
-        // Update fake status bar clock
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const mins = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('statusBarTime').textContent = `${hours}:${mins}`;
+            document.getElementById('statusBarTime').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Phone Frame Toggle for Desktop
         let isPhoneFramed = true;
         function togglePhoneFrame() {
             const container = document.getElementById('appContainer');
@@ -434,7 +436,6 @@
             }
         }
 
-        // Full Hafez Levels Database
         const levels = [
             { id: 1, ghazalNumber: 1, title: "غزل شمارهٔ ۱", category: "غزلیات", firstHemistich: "الا یا ایها الساقی ادر کاسا و ناولها", secondHemistich: "که عشق آسان نمود اول ولی افتاد مشکل‌ها", meaning: "ای ساقی، جام محبت و معرفت را بگردان و به من بنوشان؛ چرا که در آغاز، عشق آسان می‌نمود." },
             { id: 2, ghazalNumber: 2, title: "غزل شمارهٔ ۲", category: "غزلیات", firstHemistich: "صلاح کار کجا و من خراب کجا", secondHemistich: "ببین تفاوت ره از کجاست تا به کجا", meaning: "رعایت مصلحت‌اندیشی زاهدانه کجا و احوال من عاشق دل‌سوخته کجا." },
@@ -556,42 +557,83 @@
         }
 
         function renderGameUI() {
+            // First Hemistich Slots
             const slots1Container = document.getElementById('firstHemistichSlots');
             slots1Container.innerHTML = '';
             currentLevelWords1.forEach((_, idx) => {
                 const word = userSlots1[idx];
-                const btn = document.createElement('button');
-                btn.className = `px-2.5 py-1 rounded-xl text-xs font-bold transition border min-h-[34px] min-w-[38px] ${word ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 shadow-sm' : 'bg-gray-100 dark:bg-slate-900 border-dashed border-gray-300 dark:border-slate-700 text-gray-400'}`;
-                btn.textContent = word || '---';
-                if (word) btn.onclick = () => returnWordToPool(1, idx);
-                slots1Container.appendChild(btn);
+                const slotDiv = document.createElement('div');
+                slotDiv.className = `drop-target px-2.5 py-1 rounded-xl text-xs font-bold transition border min-h-[36px] min-w-[40px] flex items-center justify-center ${word ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 shadow-sm cursor-pointer' : 'bg-gray-100 dark:bg-slate-900 border-dashed border-gray-300 dark:border-slate-700 text-gray-400'}`;
+                slotDiv.textContent = word || '---';
+                
+                // Drag and drop events for slots
+                slotDiv.ondragover = (e) => { e.preventDefault(); slotDiv.classList.add('drag-over'); };
+                slotDiv.ondragleave = () => slotDiv.classList.remove('drag-over');
+                slotDiv.ondrop = (e) => {
+                    e.preventDefault();
+                    slotDiv.classList.remove('drag-over');
+                    const wordData = e.dataTransfer.getData('text/plain');
+                    const sourcePoolIdx = e.dataTransfer.getData('poolIdx');
+                    if (sourcePoolIdx !== "") {
+                        placeWordSpecificSlot(wordData, parseInt(sourcePoolIdx), 1, idx);
+                    }
+                };
+
+                if (word) {
+                    slotDiv.onclick = () => returnWordToPool(1, idx);
+                }
+                slots1Container.appendChild(slotDiv);
             });
 
+            // Second Hemistich Slots
             const slots2Container = document.getElementById('secondHemistichSlots');
             slots2Container.innerHTML = '';
             currentLevelWords2.forEach((_, idx) => {
                 const word = userSlots2[idx];
-                const btn = document.createElement('button');
-                btn.className = `px-2.5 py-1 rounded-xl text-xs font-bold transition border min-h-[34px] min-w-[38px] ${word ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 shadow-sm' : 'bg-gray-100 dark:bg-slate-900 border-dashed border-gray-300 dark:border-slate-700 text-gray-400'}`;
-                btn.textContent = word || '---';
-                if (word) btn.onclick = () => returnWordToPool(2, idx);
-                slots2Container.appendChild(btn);
+                const slotDiv = document.createElement('div');
+                slotDiv.className = `drop-target px-2.5 py-1 rounded-xl text-xs font-bold transition border min-h-[36px] min-w-[40px] flex items-center justify-center ${word ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 shadow-sm cursor-pointer' : 'bg-gray-100 dark:bg-slate-900 border-dashed border-gray-300 dark:border-slate-700 text-gray-400'}`;
+                slotDiv.textContent = word || '---';
+
+                slotDiv.ondragover = (e) => { e.preventDefault(); slotDiv.classList.add('drag-over'); };
+                slotDiv.ondragleave = () => slotDiv.classList.remove('drag-over');
+                slotDiv.ondrop = (e) => {
+                    e.preventDefault();
+                    slotDiv.classList.remove('drag-over');
+                    const wordData = e.dataTransfer.getData('text/plain');
+                    const sourcePoolIdx = e.dataTransfer.getData('poolIdx');
+                    if (sourcePoolIdx !== "") {
+                        placeWordSpecificSlot(wordData, parseInt(sourcePoolIdx), 2, idx);
+                    }
+                };
+
+                if (word) {
+                    slotDiv.onclick = () => returnWordToPool(2, idx);
+                }
+                slots2Container.appendChild(slotDiv);
             });
 
+            // Word Pool Chips
             const poolContainer = document.getElementById('wordPool');
             poolContainer.innerHTML = '';
             availablePool.forEach((item, poolIdx) => {
                 if (item !== null) {
                     const chip = document.createElement('button');
-                    chip.className = 'px-3 py-1.5 bg-white dark:bg-slate-700 border border-amber-200 dark:border-slate-600 rounded-xl text-xs font-bold shadow-sm hover:border-persian-primary transition transform active:scale-95 text-gray-800 dark:text-gray-100';
+                    chip.className = 'draggable-chip px-3 py-1.5 bg-white dark:bg-slate-700 border border-amber-200 dark:border-slate-600 rounded-xl text-xs font-bold shadow-sm hover:border-persian-primary transition transform active:scale-95 text-gray-800 dark:text-gray-100';
                     chip.textContent = item;
-                    chip.onclick = () => placeWordIntoSlot(item, poolIdx);
+                    chip.draggable = true;
+                    
+                    chip.ondragstart = (e) => {
+                        e.dataTransfer.setData('text/plain', item);
+                        e.dataTransfer.setData('poolIdx', poolIdx);
+                    };
+
+                    chip.onclick = () => placeWordIntoFirstAvailable(item, poolIdx);
                     poolContainer.appendChild(chip);
                 }
             });
         }
 
-        function placeWordIntoSlot(word, poolIdx) {
+        function placeWordIntoFirstAvailable(word, poolIdx) {
             let placed = false;
             for (let i = 0; i < userSlots1.length; i++) {
                 if (userSlots1[i] === null) { userSlots1[i] = word; placed = true; break; }
@@ -602,6 +644,20 @@
                 }
             }
             if (placed) { availablePool[poolIdx] = null; renderGameUI(); playClickSound(); }
+        }
+
+        function placeWordSpecificSlot(word, poolIdx, hemistichNum, slotIdx) {
+            const currentSlotWord = hemistichNum === 1 ? userSlots1[slotIdx] : userSlots2[slotIdx];
+            
+            if (hemistichNum === 1) userSlots1[slotIdx] = word;
+            else userSlots2[slotIdx] = word;
+
+            availablePool[poolIdx] = null;
+            if (currentSlotWord !== null) {
+                availablePool[poolIdx] = currentSlotWord;
+            }
+            renderGameUI();
+            playClickSound();
         }
 
         function returnWordToPool(hemistichNum, slotIdx) {
