@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>غزل‌چین - بازی فکری ابیات حافظ</title>
+    <title>غزل‌چین - پازل ابیات و اشعار حافظ</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -17,17 +17,16 @@
                         sans: ['Vazirmatn', 'sans-serif'],
                     },
                     colors: {
-                        duo: {
+                        m3: {
                             bg: '#FAF6F0',
                             surface: '#FFFDF9',
                             primary: '#C2593F',
-                            primaryDark: '#A0452E',
+                            primaryDark: '#9E422B',
                             gold: '#D4AF37',
                             goldDark: '#B39229',
                             text: '#2C1810',
-                            border: '#EFEBE9',
-                            card: '#FFFDF9',
-                            cardBorder: '#E6DFD5'
+                            border: '#E6DFD5',
+                            card: '#FFFDF9'
                         }
                     }
                 }
@@ -37,11 +36,11 @@
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #2C1810;
+            background-color: #1E120B;
             color: #2C1810;
         }
         .dark body {
-            background-color: #0F172A;
+            background-color: #050505;
             color: #F8FAFC;
         }
         @keyframes shake {
@@ -52,41 +51,42 @@
         .animate-shake {
             animation: shake 0.4s ease-in-out;
         }
-        /* Duo 3D Button style matching Android app */
-        .duo-btn-primary {
+        /* M3 / Duo 3D Button style matching Android Material 3 Compose */
+        .m3-button-primary {
             background-color: #C2593F;
             color: #FFFFFF;
-            border-radius: 18px;
+            border-radius: 16px;
             font-weight: 700;
-            box-shadow: 0 5px 0 #9E422B;
+            box-shadow: 0 4px 0 #9E422B;
             transition: all 0.1s ease;
         }
-        .duo-btn-primary:active {
-            transform: translateY(4px);
+        .m3-button-primary:active {
+            transform: translateY(3px);
             box-shadow: 0 1px 0 #9E422B;
         }
-        .duo-btn-secondary {
+        .m3-button-secondary {
             background-color: #FFFDF9;
             color: #C2593F;
             border: 2px solid #E6DFD5;
-            border-radius: 18px;
+            border-radius: 16px;
             font-weight: 700;
             box-shadow: 0 4px 0 #E6DFD5;
             transition: all 0.1s ease;
         }
-        .duo-btn-secondary:active {
+        .m3-button-secondary:active {
             transform: translateY(3px);
             box-shadow: 0 1px 0 #E6DFD5;
         }
-        .duo-card {
+        .m3-card {
             background-color: #FFFDF9;
             border: 2px solid #E6DFD5;
-            border-radius: 20px;
-            box-shadow: 0 4px 0 rgba(44, 24, 16, 0.05);
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(44, 24, 16, 0.06);
         }
-        .dark .duo-card {
+        .dark .m3-card {
             background-color: #1E293B;
             border-color: #334155;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .word-chip {
             background-color: #FFFDF9;
@@ -124,12 +124,6 @@
             border-color: #475569;
             color: #94A3B8;
         }
-        .drop-slot.filled {
-            background-color: #FEF3C7;
-            border: 2px solid #D4AF37;
-            border-bottom-width: 4px;
-            color: #78350F;
-        }
         .drop-slot.drag-over {
             background-color: #FEE2E2;
             border-color: #C2593F;
@@ -142,12 +136,12 @@
 <body class="min-h-screen flex items-center justify-center p-0 sm:p-4 transition-colors duration-300">
 
     <!-- Desktop Switcher -->
-    <div class="fixed top-3 left-3 z-50 hidden sm:flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg border border-amber-200 dark:border-slate-700 text-xs">
-        <span class="text-gray-500">قاب موبایل:</span>
-        <button onclick="togglePhoneFrame()" id="frameToggleBtn" class="font-bold text-persian-primary dark:text-amber-400 hover:underline">تمام‌صفحه</button>
+    <div class="fixed top-3 left-3 z-50 hidden sm:flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-amber-200 dark:border-slate-700 text-xs">
+        <span class="text-gray-500 font-semibold">حالت نمایش:</span>
+        <button onclick="togglePhoneFrame()" id="frameToggleBtn" class="font-bold text-[#C2593F] dark:text-amber-400 hover:underline">تمام‌صفحه</button>
     </div>
 
-    <!-- Mobile App Container Frame (Matching Android App Layout) -->
+    <!-- Mobile App Container Frame (Exact Mobile App UI/UX) -->
     <div id="appContainer" class="w-full sm:max-w-[420px] h-screen sm:h-[880px] sm:rounded-[48px] sm:border-[10px] sm:border-slate-800 bg-[#FAF6F0] dark:bg-slate-900 shadow-2xl flex flex-col justify-between overflow-hidden relative transition-all duration-300">
         
         <!-- Status Bar -->
@@ -191,22 +185,22 @@
             
             <!-- 1. MAIN MENU SCREEN -->
             <div id="screenMenu" class="space-y-4 my-auto">
-                <div class="text-center py-6 bg-gradient-to-b from-amber-100/60 to-transparent dark:from-slate-800 dark:to-transparent rounded-3xl p-5 border border-amber-200/50 dark:border-slate-700 duo-card">
+                <div class="text-center py-6 bg-gradient-to-b from-amber-100/60 to-transparent dark:from-slate-800 dark:to-transparent rounded-3xl p-5 border border-amber-200/50 dark:border-slate-700 m3-card">
                     <span class="text-4xl mb-2 inline-block">🖋️</span>
                     <h2 class="text-xl font-bold text-[#C2593F] dark:text-amber-400 mb-1">غزل‌چین حافظ</h2>
                     <p class="text-[11px] text-gray-600 dark:text-gray-300 max-w-xs mx-auto leading-relaxed">
-                        پازل ابیات و اشعار لسان‌الغیب با قابلیت کشیدن و رها کردن (Drag & Drop) کلمات.
+                        بازی فکری و معماهای ابیات حافظ با قابلیت Drag & Drop، تایمر زمان، سطوح دشواری و پنل مدیریت کامل.
                     </p>
                 </div>
 
                 <div class="grid gap-3">
-                    <button onclick="startCampaign()" class="w-full py-3.5 duo-btn-primary text-sm flex items-center justify-center gap-2">
+                    <button onclick="startCampaign()" class="w-full py-3.5 m3-button-primary text-sm flex items-center justify-center gap-2">
                         <span>📖</span> شروع سفر ابیات (مراحل)
                     </button>
-                    <button onclick="openLevelSelector()" class="w-full py-3.5 duo-btn-secondary text-xs flex items-center justify-center gap-2">
+                    <button onclick="openLevelSelector()" class="w-full py-3.5 m3-button-secondary text-xs flex items-center justify-center gap-2">
                         <span>🗺️</span> انتخاب آزاد مرحله
                     </button>
-                    <button onclick="startDailyChallenge()" class="w-full py-3.5 duo-btn-secondary text-xs flex items-center justify-center gap-2 border-amber-300 text-amber-900 dark:text-amber-300">
+                    <button onclick="startDailyChallenge()" class="w-full py-3.5 m3-button-secondary text-xs flex items-center justify-center gap-2 border-amber-300 text-amber-900 dark:text-amber-300">
                         <span>🌟</span> بیت ویژه روزانه حافظ
                     </button>
                 </div>
@@ -215,38 +209,48 @@
             <!-- 2. LEVEL SELECTOR SCREEN -->
             <div id="screenLevelSelect" class="space-y-3 hidden">
                 <div class="flex items-center justify-between mb-1">
-                    <h2 class="font-bold text-sm text-[#C2593F] dark:text-amber-400">🗺️ انتخاب مرحله</h2>
+                    <h2 class="font-bold text-sm text-[#C2593F] dark:text-amber-400">🗺️ انتخاب مرحله و دشواری</h2>
                     <button onclick="showScreen('menu')" class="text-xs text-gray-500 hover:underline">← بازگشت</button>
                 </div>
-                <div id="levelsGrid" class="grid grid-cols-3 gap-2.5 pb-4">
+                <!-- Difficulty selector -->
+                <div class="flex gap-2 mb-2">
+                    <button onclick="setDifficulty('آسان')" id="diffBtnEasy" class="flex-1 py-1.5 bg-[#C2593F] text-white rounded-xl text-[11px] font-bold shadow-sm">آسان</button>
+                    <button onclick="setDifficulty('متوسط')" id="diffBtnMed" class="flex-1 py-1.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border rounded-xl text-[11px] font-bold">متوسط</button>
+                    <button onclick="setDifficulty('استادانه')" id="diffBtnHard" class="flex-1 py-1.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border rounded-xl text-[11px] font-bold">استادانه</button>
+                </div>
+                <div id="levelsGrid" class="grid grid-cols-3 gap-2.5 pb-4 max-h-[60vh] overflow-y-auto">
                 </div>
             </div>
 
             <!-- 3. GAME PLAY SCREEN -->
             <div id="screenGame" class="space-y-3 hidden">
                 <!-- Level Header -->
-                <div class="duo-card p-3 flex items-center justify-between">
+                <div class="m3-card p-3 flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-semibold px-2 py-0.5 bg-amber-100 dark:bg-slate-700 text-amber-800 dark:text-amber-300 rounded-full" id="levelCategoryTag">غزلیات</span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[10px] font-semibold px-2 py-0.5 bg-amber-100 dark:bg-slate-700 text-amber-800 dark:text-amber-300 rounded-full" id="levelCategoryTag">غزلیات</span>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 bg-orange-100 dark:bg-slate-700 text-orange-800 dark:text-orange-300 rounded-full" id="levelDiffTag">آسان</span>
+                        </div>
                         <h2 class="font-bold text-sm mt-1 text-gray-800 dark:text-gray-100" id="ghazalTitle">غزل شمارهٔ ۱</h2>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="showScreen('menu')" class="text-[11px] text-gray-400 hover:text-gray-600">منو</button>
-                        <div class="text-left">
-                            <span class="text-[10px] text-gray-400">مرحله</span>
-                            <div class="font-bold text-sm text-[#C2593F] dark:text-amber-400" id="currentLevelNum">۱ از ۱۵</div>
+                        <!-- Timer -->
+                        <div class="flex items-center gap-1 bg-amber-50 dark:bg-slate-800 px-2 py-1 rounded-xl border border-amber-200">
+                            <span>⏳</span>
+                            <span class="font-bold text-xs text-amber-800 dark:text-amber-300" id="timerDisplay">۱۸۰</span>
                         </div>
+                        <button onclick="showScreen('menu')" class="text-[11px] text-gray-400 hover:text-gray-600">منو</button>
                     </div>
                 </div>
 
                 <!-- Poem Meaning / Prompt Card -->
-                <div class="duo-card p-3 bg-amber-50/70 dark:bg-slate-800/60">
+                <div class="m3-card p-3 bg-amber-50/70 dark:bg-slate-800/60">
                     <p class="text-[10px] text-gray-500 dark:text-gray-400 mb-0.5 font-semibold">تفسیر بیت:</p>
                     <p class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed" id="poemMeaning">شکوه از هجران یار و اشتیاق دیدار معشوق ازلی.</p>
                 </div>
 
                 <!-- Answer Slots Area -->
-                <div class="duo-card p-4">
+                <div class="m3-card p-4">
                     <p class="text-[11px] text-gray-400 mb-2 text-center">کلمات را بکشید یا کلیک کنید تا در خانه‌ها قرار گیرند:</p>
                     
                     <!-- First Hemistich Slots -->
@@ -281,14 +285,14 @@
                 </div>
 
                 <!-- Word Pool (Chips) -->
-                <div class="duo-card p-3">
+                <div class="m3-card p-3">
                     <p class="text-[10px] text-gray-400 mb-2 text-center">کلمات موجود (قابل درگ کردن یا کلیک):</p>
                     <div id="wordPool" class="flex flex-wrap gap-2 justify-center min-h-[70px] items-center">
                     </div>
                 </div>
 
                 <!-- Submit Button -->
-                <button onclick="verifyAnswer()" id="submitButton" class="w-full py-3 duo-btn-primary text-xs">
+                <button onclick="verifyAnswer()" id="submitButton" class="w-full py-3 m3-button-primary text-xs">
                     بررسی بیت ✨
                 </button>
             </div>
@@ -319,7 +323,7 @@
 
     <!-- Settings Modal -->
     <div id="settingsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="duo-card max-w-sm w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="m3-card max-w-sm w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="font-bold text-base text-[#C2593F] dark:text-amber-400">⚙️ تنظیمات و پروفایل</h3>
                 <button onclick="closeSettings()" class="text-gray-400 hover:text-gray-600">✕</button>
@@ -352,7 +356,7 @@
                     <button onclick="resetGameProgress()" class="flex-1 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 rounded-xl font-bold transition">
                         بازنشانی بازی 🔄
                     </button>
-                    <button onclick="saveSettings()" class="flex-1 py-2 duo-btn-primary rounded-xl font-bold transition">
+                    <button onclick="saveSettings()" class="flex-1 py-2 m3-button-primary rounded-xl font-bold transition">
                         ذخیره تنظیمات ✅
                     </button>
                 </div>
@@ -362,21 +366,21 @@
 
     <!-- Admin Password Login Modal -->
     <div id="adminLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="duo-card max-w-sm w-full p-5 shadow-2xl">
+        <div class="m3-card max-w-sm w-full p-5 shadow-2xl">
             <h3 class="font-bold text-sm text-[#C2593F] dark:text-amber-400 mb-2">🔐 ورود به کنترل پنل مدیریت</h3>
             <p class="text-[11px] text-gray-600 dark:text-gray-300 mb-3">رمز عبور مدیریت را وارد کنید (ترکیب حروف، اعداد و کاراکترها):</p>
             <input type="password" id="adminPasswordInput" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs mb-2 focus:outline-none focus:border-[#C2593F]" placeholder="رمز عبور مدیر">
             <p id="adminLoginError" class="text-[11px] text-rose-600 mb-3 hidden">رمز عبور اشتباه است!</p>
             <div class="flex gap-2">
                 <button onclick="closeAdminLogin()" class="flex-1 py-2 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold">انصراف</button>
-                <button onclick="verifyAdminPassword()" class="flex-1 py-2 duo-btn-primary rounded-xl text-xs font-bold">ورود به پنل</button>
+                <button onclick="verifyAdminPassword()" class="flex-1 py-2 m3-button-primary rounded-xl text-xs font-bold">ورود به پنل</button>
             </div>
         </div>
     </div>
 
     <!-- Admin Control Panel Modal -->
     <div id="adminPanelModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="duo-card max-w-lg w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="m3-card max-w-lg w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-3 border-b pb-2 border-gray-200 dark:border-slate-800">
                 <h3 class="font-bold text-xs text-[#C2593F] dark:text-amber-400">⚙️ پنل مدیریت جامع غزل‌چین</h3>
                 <button onclick="closeAdminPanel()" class="text-gray-400 hover:text-gray-600 text-sm">✕</button>
@@ -397,11 +401,23 @@
                     </div>
                 </div>
 
+                <!-- Add New Verse Section -->
+                <div class="bg-amber-50/50 dark:bg-slate-800/50 p-3 rounded-xl border border-amber-200 dark:border-slate-700">
+                    <h4 class="font-bold text-[11px] text-[#C2593F] dark:text-amber-400 mb-1.5">📜 افزودن بیت / غزل جدید به پایگاه داده</h4>
+                    <div class="space-y-2">
+                        <input type="number" id="newGhazalNum" placeholder="شماره غزل (مثال: ۱۰۱)" class="w-full p-2 rounded-lg border text-xs bg-white dark:bg-slate-800 dark:border-slate-700">
+                        <input type="text" id="newFirstH" placeholder="مصرع اول" class="w-full p-2 rounded-lg border text-xs bg-white dark:bg-slate-800 dark:border-slate-700">
+                        <input type="text" id="newSecondH" placeholder="مصرع دوم" class="w-full p-2 rounded-lg border text-xs bg-white dark:bg-slate-800 dark:border-slate-700">
+                        <input type="text" id="newMeaning" placeholder="تفسیر و معنی بیت" class="w-full p-2 rounded-lg border text-xs bg-white dark:bg-slate-800 dark:border-slate-700">
+                        <button onclick="addNewVerseAdmin()" class="w-full py-2 m3-button-primary rounded-lg text-xs font-bold">افزودن بیت به بازی ➕</button>
+                    </div>
+                </div>
+
                 <div class="bg-gray-50 dark:bg-slate-800/50 p-3 rounded-xl border border-gray-200 dark:border-slate-700">
                     <h4 class="font-bold text-[11px] text-[#C2593F] dark:text-amber-400 mb-1.5">📞 بانک اطلاعات شماره تلفن کاربران</h4>
                     <div class="flex gap-2 mb-2">
                         <input type="text" id="newPhoneInput" placeholder="09123456789" class="flex-1 p-2 rounded-lg border text-xs bg-white dark:bg-slate-800 dark:border-slate-700">
-                        <button onclick="addPhoneNumber()" class="px-3 py-2 duo-btn-primary rounded-lg text-xs font-bold">ثبت</button>
+                        <button onclick="addPhoneNumber()" class="px-3 py-2 m3-button-primary rounded-lg text-xs font-bold">ثبت</button>
                     </div>
                     <div id="phoneListContainer" class="max-h-24 overflow-y-auto space-y-1 text-[11px]">
                     </div>
@@ -450,17 +466,18 @@
 
     <!-- Success Celebration Modal -->
     <div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="duo-card max-w-sm w-full p-5 shadow-2xl text-center">
+        <div class="m3-card max-w-sm w-full p-5 shadow-2xl text-center">
             <div class="text-4xl mb-2">🎉</div>
             <h3 class="font-bold text-base text-[#C2593F] dark:text-amber-400 mb-1">آفرین! بیت با موفقیت چیده شد</h3>
-            <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3">پاداش: ۱۵۰ امتیاز و ۲۰ سکه زرین</p>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3" id="successRewardText">پاداش: ۱۵۰ امتیاز و ۲۰ سکه زرین</p>
             
             <div class="bg-amber-50 dark:bg-slate-800 p-3 rounded-2xl mb-4 text-right border border-amber-200/60 dark:border-slate-700">
                 <p class="font-bold text-xs text-gray-800 dark:text-gray-100 mb-1" id="successFirstLine">-</p>
-                <p class="font-bold text-xs text-gray-800 dark:text-gray-100" id="successSecondLine">-</p>
+                <p class="font-bold text-xs text-gray-800 dark:text-gray-100 mb-3" id="successSecondLine">-</p>
+                <p class="text-[11px] text-gray-600 dark:text-gray-300 leading-relaxed border-t pt-2 border-amber-200/50" id="successMeaning">-</p>
             </div>
 
-            <button onclick="nextLevel()" class="w-full py-3 duo-btn-primary text-xs">
+            <button onclick="nextLevel()" class="w-full py-3 m3-button-primary text-xs">
                 مرحله بعدی 🚀
             </button>
         </div>
@@ -494,7 +511,7 @@
             }
         }
 
-        const levels = [
+        const defaultLevels = [
             { id: 1, ghazalNumber: 1, title: "غزل شمارهٔ ۱", category: "غزلیات", firstHemistich: "الا یا ایها الساقی ادر کاسا و ناولها", secondHemistich: "که عشق آسان نمود اول ولی افتاد مشکل‌ها", meaning: "ای ساقی، جام محبت و معرفت را بگردان و به من بنوشان؛ چرا که در آغاز، عشق آسان می‌نمود." },
             { id: 2, ghazalNumber: 2, title: "غزل شمارهٔ ۲", category: "غزلیات", firstHemistich: "صلاح کار کجا و من خراب کجا", secondHemistich: "ببین تفاوت ره از کجاست تا به کجا", meaning: "رعایت مصلحت‌اندیشی زاهدانه کجا و احوال من عاشق دل‌سوخته کجا." },
             { id: 3, ghazalNumber: 3, title: "غزل شمارهٔ ۳", category: "غزلیات", firstHemistich: "اگر آن ترک شیرازی به دست آرد دل ما را", secondHemistich: "به خال هندویش بخشم سمرقند و بخارا را", meaning: "پیشکش سمرقند و بخارا در برابر خال هندویش." },
@@ -512,12 +529,15 @@
             { id: 15, ghazalNumber: 46, title: "غزل شمارهٔ ۴۶", category: "غزلیات", firstHemistich: "گل در بر و می در کف و معشوق به کام است", secondHemistich: "سلطان جهانم به چنین روز غلام است", meaning: "غلامی پادشاه جهان در چنین روزی." }
         ];
 
+        let levels = JSON.parse(localStorage.getItem('ghazal_custom_levels') || JSON.stringify(defaultLevels));
+
         let currentLevelIndex = parseInt(localStorage.getItem('ghazal_current_level') || '0');
         let score = parseInt(localStorage.getItem('ghazal_score') || '0');
         let coins = parseInt(localStorage.getItem('ghazal_coins') || '100');
         let username = localStorage.getItem('ghazal_username') || 'حافظ‌دوست';
         let isDarkMode = localStorage.getItem('ghazal_dark') === 'true';
         let isSfxEnabled = localStorage.getItem('ghazal_sfx') !== 'false';
+        let currentDifficulty = localStorage.getItem('ghazal_difficulty') || 'آسان';
         let registeredPhones = JSON.parse(localStorage.getItem('ghazal_phones') || '["09123456789", "09198765432"]');
         let adminPass = localStorage.getItem('ghazal_admin_pass') || 'Hafez@1402';
         let tapCount = 0;
@@ -527,6 +547,8 @@
         let userSlots1 = [];
         let userSlots2 = [];
         let availablePool = [];
+        let levelTimer = null;
+        let remainingSeconds = 180;
 
         window.addEventListener('DOMContentLoaded', () => {
             if (isDarkMode) {
@@ -536,12 +558,13 @@
             document.getElementById('usernameInput').value = username;
             document.getElementById('usernameDisplay').textContent = username;
             document.getElementById('sfxToggle').checked = isSfxEnabled;
-            
+            updateDifficultyUI();
             updateStatsDisplay();
             showScreen('menu');
         });
 
         function showScreen(screenName) {
+            clearInterval(levelTimer);
             document.getElementById('screenMenu').classList.add('hidden');
             document.getElementById('screenLevelSelect').classList.add('hidden');
             document.getElementById('screenGame').classList.add('hidden');
@@ -564,6 +587,27 @@
             localStorage.setItem('ghazal_score', score);
         }
 
+        function setDifficulty(diff) {
+            currentDifficulty = diff;
+            localStorage.setItem('ghazal_difficulty', diff);
+            updateDifficultyUI();
+            showToast(`سطح دشواری روی ${diff} تنظیم شد`);
+        }
+
+        function updateDifficultyUI() {
+            ['Easy', 'Med', 'Hard'].forEach(k => {
+                const btn = document.getElementById(`diffBtn${k}`);
+                if (btn) {
+                    btn.className = "flex-1 py-1.5 rounded-xl text-[11px] font-bold border " + 
+                        ((k === 'Easy' && currentDifficulty === 'آسان') || 
+                         (k === 'Med' && currentDifficulty === 'متوسط') || 
+                         (k === 'Hard' && currentDifficulty === 'استادانه') 
+                         ? "bg-[#C2593F] text-white border-[#C2593F] shadow-sm" 
+                         : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-slate-700");
+                }
+            });
+        }
+
         function startCampaign() { showScreen('game'); }
         function openLevelSelector() { showScreen('levelSelect'); }
         function startDailyChallenge() {
@@ -577,7 +621,7 @@
             grid.innerHTML = '';
             levels.forEach((lvl, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'duo-card p-2.5 text-center hover:border-[#C2593F] transition flex flex-col items-center justify-center';
+                btn.className = 'm3-card p-2.5 text-center hover:border-[#C2593F] transition flex flex-col items-center justify-center';
                 btn.innerHTML = `
                     <span class="text-[10px] text-gray-400 mb-0.5">مرحله ${idx + 1}</span>
                     <span class="font-bold text-xs text-[#C2593F] dark:text-amber-400">غزل ${lvl.ghazalNumber}</span>
@@ -593,6 +637,7 @@
             const level = levels[index];
             document.getElementById('ghazalTitle').textContent = level.title;
             document.getElementById('levelCategoryTag').textContent = level.category;
+            document.getElementById('levelDiffTag').textContent = currentDifficulty;
             document.getElementById('poemMeaning').textContent = level.meaning;
             document.getElementById('currentLevelNum').textContent = `${index + 1} از ${levels.length}`;
 
@@ -604,6 +649,19 @@
 
             availablePool = shuffleArray([...currentLevelWords1, ...currentLevelWords2]);
             renderGameUI();
+
+            remainingSeconds = currentDifficulty === 'آسان' ? 240 : currentDifficulty === 'متوسط' ? 180 : 120;
+            document.getElementById('timerDisplay').textContent = remainingSeconds;
+            clearInterval(levelTimer);
+            levelTimer = setInterval(() => {
+                remainingSeconds--;
+                document.getElementById('timerDisplay').textContent = remainingSeconds;
+                if (remainingSeconds <= 0) {
+                    clearInterval(levelTimer);
+                    showToast('زمان این مرحله به پایان رسید! ⏰');
+                    playErrorSound();
+                }
+            }, 1000);
         }
 
         function shuffleArray(array) {
@@ -772,10 +830,12 @@
         }
 
         function verifyAnswer() {
+            clearInterval(levelTimer);
             if (userSlots1.join(' ') === currentLevelWords1.join(' ') && userSlots2.join(' ') === currentLevelWords2.join(' ')) {
                 score += 150; coins += 20; updateStatsDisplay();
                 document.getElementById('successFirstLine').textContent = levels[currentLevelIndex].firstHemistich;
                 document.getElementById('successSecondLine').textContent = levels[currentLevelIndex].secondHemistich;
+                document.getElementById('successMeaning').textContent = levels[currentLevelIndex].meaning;
                 document.getElementById('successModal').classList.remove('hidden');
                 playSuccessSound();
             } else {
@@ -824,6 +884,33 @@
         }
         function closeAdminPanel() { document.getElementById('adminPanelModal').classList.add('hidden'); }
 
+        function addNewVerseAdmin() {
+            const gNum = parseInt(document.getElementById('newGhazalNum').value) || 101;
+            const fH = document.getElementById('newFirstH').value.trim();
+            const sH = document.getElementById('newSecondH').value.trim();
+            const meaning = document.getElementById('newMeaning').value.trim();
+
+            if (fH && sH) {
+                const newLevel = {
+                    id: levels.length + 1,
+                    ghazalNumber: gNum,
+                    title: `غزل شمارهٔ ${gNum}`,
+                    category: "غزلیات ادمین",
+                    firstHemistich: fH,
+                    secondHemistich: sH,
+                    meaning: meaning || "تفسیر ثبت شده توسط مدیریت."
+                };
+                levels.unshift(newLevel);
+                localStorage.setItem('ghazal_custom_levels', JSON.stringify(levels));
+                document.getElementById('newFirstH').value = '';
+                document.getElementById('newSecondH').value = '';
+                document.getElementById('newMeaning').value = '';
+                showToast('بیت جدید با موفقیت به پایگاه داده افزوده شد! 📜✨');
+            } else {
+                showToast('لطفاً مصرع اول و دوم را وارد کنید!');
+            }
+        }
+
         function renderPhoneList() {
             const container = document.getElementById('phoneListContainer');
             container.innerHTML = '';
@@ -871,7 +958,7 @@
             } catch(e) {}
         }
         function playErrorSound() {
-            if (!isSfxEnabled, !isSfxEnabled) return;
+            if (!isSfxEnabled) return;
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator(); const gain = ctx.createGain();
